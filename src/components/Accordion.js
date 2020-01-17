@@ -85,27 +85,23 @@ export default class Accordion extends React.Component {
       showContent3: false,
     };
 
-    //this.changeHeight = new Value(0);
     this.heightRow1 = new Value(50);
     this.heightRow2 = new Value(50);
     this.heightRow3 = new Value(50);
   }
-  /*  setCurrentExpandedElem = elemId => {
-    this.setState({currentElementId: elemId});
-  }; */
 
   toggleRow1Content = () => {
-    // if (!this.state.showContent1) {
-    this.heightRow1 = runTiming(new Clock(), new Value(50), new Value(200));
-    // } else {
-    //   this.heightRow1 = runTiming(new Clock(), new Value(200), new Value(50));
-    // }
-    // if (this.state.showContent2) {
-    //   this.heightRow2 = runTiming(new Clock(), new Value(200), new Value(50));
-    // }
-    // if (this.state.showContent3) {
-    //   this.heightRow3 = runTiming(new Clock(), new Value(200), new Value(50));
-    // }
+    if (!this.state.showContent1) {
+      this.heightRow1 = runTiming(new Clock(), new Value(50), new Value(200));
+    } else {
+      this.heightRow1 = runTiming(new Clock(), new Value(200), new Value(50));
+    }
+    if (this.state.showContent2) {
+      this.heightRow2 = runTiming(new Clock(), new Value(200), new Value(50));
+    }
+    if (this.state.showContent3) {
+      this.heightRow3 = runTiming(new Clock(), new Value(200), new Value(50));
+    }
 
     this.setState({
       showContent1: !this.state.showContent1,
@@ -115,34 +111,6 @@ export default class Accordion extends React.Component {
   };
 
   toggleRow2Content = () => {
-    /*   this.heightIncrease = runTiming(new Clock(), new Value(0), new Value(3600));
-      this.heightDecrease = runTiming(new Clock(), new Value(0), new Value(3600));
-      this.heightRow1 = interpolate(this.heightIncrease, {
-        inputRange: [0, 3600],
-        outputRange: [this.heightRow1, 50],
-        extrapolate: Animated.Extrapolate.CLAMP,
-      });
-
-      if (!this.state.allowSecondRowUpdate) {
-        this.heightRow2 = interpolate(this.heightIncrease, {
-          inputRange: [0, 3600],
-          outputRange: [this.heightRow2, 200],
-          extrapolate: Animated.Extrapolate.CLAMP,
-        });
-      } else {
-        this.heightRow2 = interpolate(this.heightIncrease, {
-          inputRange: [0, 3600],
-          outputRange: [this.heightRow2, 50],
-          extrapolate: Animated.Extrapolate.CLAMP,
-        });
-      }
-
-      this.heightRow3 = interpolate(this.heightDecrease, {
-        inputRange: [0, 3600],
-        outputRange: [this.heightRow3, 50],
-        extrapolate: Animated.Extrapolate.CLAMP,
-      });
-   */
     if (!this.state.showContent2) {
       this.heightRow2 = runTiming(new Clock(), new Value(50), new Value(200));
     } else {
@@ -154,7 +122,6 @@ export default class Accordion extends React.Component {
     if (this.state.showContent3) {
       this.heightRow3 = runTiming(new Clock(), new Value(200), new Value(50));
     }
-
     this.setState({
       showContent1: false,
       showContent2: !this.state.showContent2,
@@ -163,35 +130,6 @@ export default class Accordion extends React.Component {
   };
 
   toggleRow3Content = () => {
-    /*  this.heightIncrease = runTiming(new Clock(), new Value(0), new Value(3600));
-      this.heightDecrease = runTiming(new Clock(), new Value(0), new Value(3600));
-
-      this.heightRow1 = interpolate(this.heightDecrease, {
-        inputRange: [0, 3600],
-        outputRange: [this.heightRow1, 50],
-        extrapolate: Animated.Extrapolate.CLAMP,
-      });
-
-      this.heightRow2 = interpolate(this.heightDecrease, {
-        inputRange: [0, 3600],
-        outputRange: [this.heightRow2, 50],
-        extrapolate: Animated.Extrapolate.CLAMP,
-      });
-
-      if (!this.state.allowThirdRowUpdate) {
-        this.heightRow3 = interpolate(this.heightIncrease, {
-          inputRange: [0, 3600],
-          outputRange: [this.heightRow3, 200],
-          extrapolate: Animated.Extrapolate.CLAMP,
-        });
-      } else {
-        this.heightRow3 = interpolate(this.heightDecrease, {
-          inputRange: [0, 3600],
-          outputRange: [this.heightRow3, 50],
-          extrapolate: Animated.Extrapolate.CLAMP,
-        });
-      } */
-
     if (!this.state.showContent3) {
       this.heightRow3 = runTiming(new Clock(), new Value(50), new Value(200));
     } else {
@@ -203,7 +141,6 @@ export default class Accordion extends React.Component {
     if (this.state.showContent2) {
       this.heightRow2 = runTiming(new Clock(), new Value(200), new Value(50));
     }
-
     this.setState({
       showContent1: false,
       showContent2: false,
