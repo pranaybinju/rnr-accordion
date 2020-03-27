@@ -1,6 +1,6 @@
-import React from 'react';
-import Animated, {Easing} from 'react-native-reanimated';
-import {Text, View, TouchableOpacity} from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import Animated, { Easing } from 'react-native-reanimated';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 const {
   set,
@@ -40,14 +40,15 @@ function runTiming(clock, value, dest) {
       startClock(clock),
     ]),
     timing(clock, state, config), //here we start animation using timing which takes state and config variables
+    // cond(!state.finished, debug('animation running')),
     cond(state.finished, debug('stop clock', stopClock(clock))), //if animation is finished ,we stop clock
     state.position, //return position of animated variable which will map to this.heightIncrease
   ]);
 }
 
-const Row = ({title, content, showContent, toggleContent, height}) => {
+const Row = ({ title, content, showContent, toggleContent, height }) => {
   return (
-    <Animated.View style={{height: height}}>
+    <Animated.View style={{ height: height }}>
       {/*this is title part */}
       <TouchableOpacity
         onPress={() => {
@@ -57,12 +58,11 @@ const Row = ({title, content, showContent, toggleContent, height}) => {
           style={{
             backgroundColor: '#8f8f8f',
             height: 50,
-
             borderColor: 'white',
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-          <Text style={{marginLeft: 10, color: 'white', fontSize: 14}}>
+          <Text style={{ marginLeft: 10, color: 'white', fontSize: 14 }}>
             {title}
           </Text>
         </View>
@@ -76,112 +76,110 @@ const Row = ({title, content, showContent, toggleContent, height}) => {
   );
 };
 
-export default class Accordion extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showContent1: false,
-      showContent2: false,
-      showContent3: false,
-    };
 
-    this.heightRow1 = new Value(50);
-    this.heightRow2 = new Value(50);
-    this.heightRow3 = new Value(50);
-  }
 
-  toggleRow1Content = () => {
-    if (!this.state.showContent1) {
-      this.heightRow1 = runTiming(new Clock(), new Value(50), new Value(200));
+const Accordion = (props) => {
+  const [showContent1, setShowContent1] = useState(false);
+  const [showContent2, setShowContent2] = useState(false);
+  const [showContent3, setShowContent3] = useState(false);
+
+  let heightRow1 = useRef(new Value(50));
+  let heightRow2 = useRef(new Value(50));
+  let heightRow3 = useRef(new Value(50));
+
+  // useEffect(() => {
+  //   return () => heightRow1.current.close()
+  // }, [])
+
+  // useEffect(() => {
+  //   return () => heightRow1.current.close()
+  // }, [])
+
+  const toggleRow1Content = () => {
+
+    if (!showContent1) {
+      heightRow1.current = runTiming(new Clock(), new Value(50), new Value(200));
     } else {
-      this.heightRow1 = runTiming(new Clock(), new Value(200), new Value(50));
+      heightRow1.current = runTiming(new Clock(), new Value(200), new Value(50));
     }
-    if (this.state.showContent2) {
-      this.heightRow2 = runTiming(new Clock(), new Value(200), new Value(50));
+    if (showContent2) {
+      heightRow2.current = runTiming(new Clock(), new Value(200), new Value(50));
     }
-    if (this.state.showContent3) {
-      this.heightRow3 = runTiming(new Clock(), new Value(200), new Value(50));
+    if (showContent3) {
+      heightRow3.current = runTiming(new Clock(), new Value(200), new Value(50));
     }
-
-    this.setState({
-      showContent1: !this.state.showContent1,
-      showContent2: false,
-      showContent3: false,
-    });
+    setShowContent1(!showContent1);
+    setShowContent2(false);
+    setShowContent3(false);
   };
 
-  toggleRow2Content = () => {
-    if (!this.state.showContent2) {
-      this.heightRow2 = runTiming(new Clock(), new Value(50), new Value(200));
+  const toggleRow2Content = () => {
+    if (!showContent2) {
+      heightRow2.current = runTiming(new Clock(), new Value(50), new Value(200));
     } else {
-      this.heightRow2 = runTiming(new Clock(), new Value(200), new Value(50));
+      heightRow2.current = runTiming(new Clock(), new Value(200), new Value(50));
     }
-    if (this.state.showContent1) {
-      this.heightRow1 = runTiming(new Clock(), new Value(200), new Value(50));
+    if (showContent1) {
+      heightRow1.current = runTiming(new Clock(), new Value(200), new Value(50));
     }
-    if (this.state.showContent3) {
-      this.heightRow3 = runTiming(new Clock(), new Value(200), new Value(50));
+    if (showContent3) {
+      heightRow3.current = runTiming(new Clock(), new Value(200), new Value(50));
     }
-    this.setState({
-      showContent1: false,
-      showContent2: !this.state.showContent2,
-      showContent3: false,
-    });
+    setShowContent1(false);
+    setShowContent2(!showContent2);
+    setShowContent3(false);
   };
 
-  toggleRow3Content = () => {
-    if (!this.state.showContent3) {
-      this.heightRow3 = runTiming(new Clock(), new Value(50), new Value(200));
+  const toggleRow3Content = () => {
+    if (!showContent3) {
+      heightRow3.current = runTiming(new Clock(), new Value(50), new Value(200));
     } else {
-      this.heightRow3 = runTiming(new Clock(), new Value(200), new Value(50));
+      heightRow3.current = runTiming(new Clock(), new Value(200), new Value(50));
     }
-    if (this.state.showContent1) {
-      this.heightRow1 = runTiming(new Clock(), new Value(200), new Value(50));
+    if (showContent1) {
+      heightRow1.current = runTiming(new Clock(), new Value(200), new Value(50));
     }
-    if (this.state.showContent2) {
-      this.heightRow2 = runTiming(new Clock(), new Value(200), new Value(50));
+    if (showContent2) {
+      heightRow2.current = runTiming(new Clock(), new Value(200), new Value(50));
     }
-    this.setState({
-      showContent1: false,
-      showContent2: false,
-      showContent3: !this.state.showContent3,
-    });
+    setShowContent1(false);
+    setShowContent2(false);
+    setShowContent3(!showContent3);
   };
 
-  render() {
-    return (
-      <View
-        style={{
-          margin: 20,
 
-          borderRadius: 10,
-
-          borderWidth: 1,
-          overflow: 'hidden',
-          borderColor: '#00000',
-        }}>
-        <Row
-          height={this.heightRow1}
-          content="This is first row"
-          title="Row 1"
-          showContent={this.state.showContent1}
-          toggleContent={this.toggleRow1Content}
-        />
-        <Row
-          height={this.heightRow2}
-          content="This is second row"
-          title="Row 2"
-          showContent={this.state.showContent2}
-          toggleContent={this.toggleRow2Content}
-        />
-        <Row
-          height={this.heightRow3}
-          content="This is third row"
-          title="Row 3"
-          showContent={this.state.showContent3}
-          toggleContent={this.toggleRow3Content}
-        />
-      </View>
-    );
-  }
+  return (
+    <View
+      style={{
+        margin: 20,
+        borderRadius: 10,
+        borderWidth: 1,
+        overflow: 'hidden',
+        borderColor: '#00000',
+      }}>
+      <Row
+        height={heightRow1.current}
+        content="This is first row"
+        title="Row 1"
+        showContent={showContent1}
+        toggleContent={toggleRow1Content}
+      />
+      <Row
+        height={heightRow2.current}
+        content="This is second row"
+        title="Row 2"
+        showContent={showContent2}
+        toggleContent={toggleRow2Content}
+      />
+      <Row
+        height={heightRow3.current}
+        content="This is third row"
+        title="Row 3"
+        showContent={showContent3}
+        toggleContent={toggleRow3Content}
+      />
+    </View>
+  );
 }
+
+export default Accordion
