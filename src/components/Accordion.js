@@ -83,17 +83,10 @@ const Accordion = (props) => {
   const [showContent2, setShowContent2] = useState(false);
   const [showContent3, setShowContent3] = useState(false);
 
+  //instance varible for Row height
   let heightRow1 = useRef(new Value(50));
   let heightRow2 = useRef(new Value(50));
   let heightRow3 = useRef(new Value(50));
-
-  // useEffect(() => {
-  //   return () => heightRow1.current.close()
-  // }, [])
-
-  // useEffect(() => {
-  //   return () => heightRow1.current.close()
-  // }, [])
 
   const toggleRow1Content = () => {
 
